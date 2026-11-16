@@ -63,7 +63,13 @@ def build(today: date | None = None) -> str:
                     safe.append((p[key], name, g, key))
         lines.append("")
 
-    lines += ["## Değerli oranlar", ""]
+    lines += [
+        "## Değerli oranlar",
+        "",
+        "Dikkat: bu kuralların geçmiş maçlardaki kâr/zarar sonucu `reports/backtest.txt` "
+        "dosyasında. Getiri sütunu eksideyse bu bölümdeki seçimlere para yatırma.",
+        "",
+    ]
     if values:
         lines += [
             "Model olasılığı piyasa oranının ima ettiğinden yüksek olan seçimler.",

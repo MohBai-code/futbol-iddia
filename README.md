@@ -34,7 +34,7 @@ Lig kodları ve tam liste `iddia/config.py` içinde (`T1` Süper Lig, `E0` Premi
 
 ## Bilgisayarsız kullanım (GitHub Actions)
 
-Depo GitHub'dayken `.github/workflows/rapor.yml` her pazartesi ve cuma sabahı veriyi
+Depo GitHub'dayken `.github/workflows/rapor.yml` her salı ve cuma akşamı veriyi
 indirir, raporu `reports/` klasörüne yazar ve depoya kaydeder. Raporu telefondan
 GitHub'da açıp okuyabilirsin. Elle çalıştırmak için: Actions > Haftalık rapor > Run workflow.
 Takım adları veri kaynağındaki gibi yazılır (yanlış yazarsan liste gösterilir).

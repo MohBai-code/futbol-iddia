@@ -16,7 +16,7 @@ yüksek olasılık, küçük kasa payı.
 - `python -m pytest` — testler
 
 ## Otomasyon
-`.github/workflows/rapor.yml` pazartesi ve cuma veriyi indirir, backtest + raporu
+`.github/workflows/rapor.yml` salı ve cuma akşamı veriyi indirir, backtest + raporu
 `reports/` altına yazıp commit eder. Kullanıcı raporları GitHub'dan okur; bilgisayarında
 kurulum yok.
 
@@ -30,6 +30,11 @@ kurulum yok.
 - Kesin kazanç vaat eden ifade yazma. Raporlarda olasılık ve belirsizlik açık olsun.
 - Veri: football-data.co.uk. Sütunlar `data.py` içindeki `ODDS_COLS` ile eşlenir;
   KG ve çifte şans oranı bu kaynakta yok, o yüzden "en az oran" gösteriliyor.
+
+## Bilinen durum (16.11.2026 ilk gerçek backtest)
+Değerli oran kuralları 16 ligin 15'inde zarar etti (lig başına -%0,4 ile -%27 arası),
+model log kaybı her ligde piyasadan kötü. Yani "Değerli oranlar" bölümü şu haliyle
+para yatırmaya uygun değil; öncelik modeli iyileştirmek.
 
 ## Sıradaki fikirler
 - `kupon` komutu: oynanan bahisleri CSV'ye kaydet, kâr/zarar ve isabet takibi
