@@ -62,6 +62,23 @@ def test_value_rules():
     assert markets.value_bets(probs, {"1": 2.50}) == []   # şüpheli derecede büyük avantaj
 
 
+def test_similar_odds_matching():
+    from iddia import benzer
+    pool = pd.DataFrame({
+        "date": pd.to_datetime(["2024-01-01", "2024-02-01", "2024-03-01", "2025-01-01"]),
+        "lig": "L", "home": "A", "away": "B",
+        "hg": [2, 1, 0, 3], "ag": [0, 1, 1, 2],
+        "o_1": [1.85, 1.90, 2.60, 1.86], "o_x": [3.50, 3.45, 3.20, 3.55], "o_2": [4.20, 4.10, 2.70, 4.25],
+    })
+    sim = benzer.similar(pool, 1.85, 3.50, 4.20)
+    assert len(sim) == 3 and sim["date"].is_monotonic_decreasing
+    assert len(benzer.similar(pool, 1.85, 3.50, 4.20, before="2025-01-01")) == 2  # geleceğe bakmaz
+    s = benzer.summarize(sim)
+    assert abs(s["1"] - 2 / 3) < 1e-9 and abs(s["x"] - 1 / 3) < 1e-9 and s["2"] == 0
+    assert abs(s["kg"] - 2 / 3) < 1e-9 and abs(s["ust"] - 1 / 3) < 1e-9
+    assert benzer.summarize(pool.iloc[0:0]) == {"n": 0}
+
+
 if __name__ == "__main__":
     for name, fn in list(globals().items()):
         if name.startswith("test_"):

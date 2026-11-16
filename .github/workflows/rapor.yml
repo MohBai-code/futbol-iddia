@@ -21,6 +21,7 @@ jobs:
       - run: python -m iddia indir
       - run: python -m iddia backtest | tee reports/backtest.txt
       - run: python -m iddia rapor
+      - run: python -m iddia benzer-rapor
       - name: Raporu depoya kaydet
         run: |
           git config user.name "github-actions[bot]"

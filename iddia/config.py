@@ -27,7 +27,7 @@ LEAGUES = {
     "G1": "Yunanistan Süper Lig",
 }
 
-N_SEASONS = 3            # indirilecek sezon sayısı (içinde bulunulan dahil)
+N_SEASONS = 8            # indirilecek sezon sayısı (içinde bulunulan dahil)
 
 # --- Model ---
 HALF_LIFE_DAYS = 240     # bir maçın ağırlığı bu kadar günde yarıya iner
@@ -43,5 +43,10 @@ MAX_EDGE = 0.25          # bundan büyük "avantaj" genelde model hatasıdır, e
 MIN_ODDS = 1.30
 KELLY_FRACTION = 0.25    # çeyrek Kelly
 MAX_STAKE = 0.02         # tek bahiste kasanın en fazla %2'si
+
+# --- Benzer oranlı maçlar ---
+SIMILAR_TOL = 0.04       # üç oranın her biri hedefin ±%4 yakınında olmalı
+SIMILAR_MIN_N = 30       # bundan az benzer maç varsa "örnek az" uyarısı
+SIMILAR_SHOW = 12        # tabloda listelenecek en yeni maç sayısı
 
 REPORT_DAYS = 7          # rapor kaç gün ilerisini kapsasın

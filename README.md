@@ -39,6 +39,19 @@ indirir, raporu `reports/` klasörüne yazar ve depoya kaydeder. Raporu telefond
 GitHub'da açıp okuyabilirsin. Elle çalıştırmak için: Actions > Haftalık rapor > Run workflow.
 Takım adları veri kaynağındaki gibi yazılır (yanlış yazarsan liste gösterilir).
 
+## Benzer oranlı maçlar
+
+"Bu maçla aynı oranlarla açılmış geçmiş maçlar nasıl bitti?" sorusunun cevabı.
+
+- **Otomatik:** her çalışmada `reports/benzer-YYYY-AA-GG.md` yazılır. Haftanın her maçı
+  için özet (MS 1/X/2, KG Var, 2.5 Üst yüzdeleri, en sık skorlar) ve benzer maçların listesi.
+- **Elle sorgu (telefondan):** GitHub'da Actions > Oran sorgula > Run workflow, üç oranı yaz.
+  Sonuç tablosu çalışmanın özet sayfasında görünür.
+- **Komutla:** `python -m iddia benzer 1.85 3.50 4.20`
+
+Benzerlik: üç oranın her biri ±%4 yakınında (`config.SIMILAR_TOL`). Oranlar maçtan birkaç
+gün önceki piyasa ortalamasıdır; gerçek ilk açılış oranı ücretsiz veride yok.
+
 ## Raporu okumak
 
 - **Lig tabloları:** her maç için 1/X/2, KG Var, 2.5 Üst olasılığı ve gol beklentisi.

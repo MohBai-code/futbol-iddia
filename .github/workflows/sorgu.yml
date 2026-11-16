@@ -1,0 +1,34 @@
+name: Oran sorgula
+
+on:
+  workflow_dispatch:
+    inputs:
+      ms1:
+        description: "MS 1 oranı (örnek: 1.85)"
+        required: true
+      msx:
+        description: "MS X oranı (örnek: 3.50)"
+        required: true
+      ms2:
+        description: "MS 2 oranı (örnek: 4.20)"
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  sorgu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pandas numpy
+      - run: python -m iddia indir
+      - name: Benzer oranlı maçlar
+        env:
+          MS1: ${{ inputs.ms1 }}
+          MSX: ${{ inputs.msx }}
+          MS2: ${{ inputs.ms2 }}
+        run: python -m iddia benzer "$MS1" "$MSX" "$MS2" | tee -a "$GITHUB_STEP_SUMMARY"

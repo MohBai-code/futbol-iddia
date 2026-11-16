@@ -2,7 +2,7 @@
 import argparse
 import sys
 
-from . import backtest, config, data, markets, model, report
+from . import backtest, benzer, config, data, markets, model, report
 
 
 def main() -> None:
@@ -15,6 +15,11 @@ def main() -> None:
     m.add_argument("lig", choices=list(config.LEAGUES))
     m.add_argument("ev")
     m.add_argument("deplasman")
+    b = sub.add_parser("benzer", help="Verilen MS oranlarıyla açılmış geçmiş maçların sonuçları")
+    b.add_argument("ms1")
+    b.add_argument("msx")
+    b.add_argument("ms2")
+    sub.add_parser("benzer-rapor", help="Haftanın her maçı için benzer oranlı maç tablosu")
     args = ap.parse_args()
     try:  # Windows konsolunda Türkçe karakterler bozulmasın
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -26,6 +31,16 @@ def main() -> None:
     elif args.cmd == "rapor":
         path = report.write()
         print(f"Rapor yazıldı: {path}")
+    elif args.cmd == "benzer":
+        try:
+            odds = [float(v.replace(",", ".")) for v in (args.ms1, args.msx, args.ms2)]
+        except ValueError:
+            raise SystemExit("Oranları sayı olarak yaz, örnek: python -m iddia benzer 1.85 3.50 4.20")
+        if min(odds) <= 1:
+            raise SystemExit("Oranlar 1'den büyük olmalı.")
+        print(benzer.query(*odds))
+    elif args.cmd == "benzer-rapor":
+        print(f"Rapor yazıldı: {benzer.write()}")
     elif args.cmd == "backtest":
         print(backtest.run_all())
     elif args.cmd == "mac":

@@ -13,12 +13,15 @@ yüksek olasılık, küçük kasa payı.
 - `python -m iddia rapor` — reports/YYYY-AA-GG.md
 - `python -m iddia backtest` — model + kural sınaması
 - `python -m iddia mac <lig> <ev> <deplasman>`
+- `python -m iddia benzer <ms1> <msx> <ms2>` — bu oranlarla açılmış geçmiş maçlar
+- `python -m iddia benzer-rapor` — reports/benzer-YYYY-AA-GG.md
 - `python -m pytest` — testler
 
 ## Otomasyon
 `.github/workflows/rapor.yml` salı ve cuma akşamı veriyi indirir, backtest + raporu
 `reports/` altına yazıp commit eder. Kullanıcı raporları GitHub'dan okur; bilgisayarında
-kurulum yok.
+kurulum yok. `.github/workflows/sorgu.yml` elle çalışır: üç MS oranı alır, benzer
+maç tablosunu çalışma özetine yazar.
 
 ## Kurallar
 - Ücretsiz veri ve araçlarla kal; ücretli API önerme (kullanıcı sormadıkça).
