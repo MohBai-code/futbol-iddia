@@ -14,6 +14,7 @@ yüksek olasılık, küçük kasa payı.
 - `python -m iddia backtest` — model + kural sınaması
 - `python -m iddia mac <lig> <ev> <deplasman>`
 - `python -m iddia benzer <ms1> <msx> <ms2>` — bu oranlarla açılmış geçmiş maçlar
+- `python -m iddia analiz <ev> <deplasman> [--lig T1] [--kaydet]` — tek maç analizi (form, aralarındaki maçlar, tahmin, yorum)
 - `python -m iddia benzer-rapor` — reports/benzer-YYYY-AA-GG.md
 - `python -m pytest` — testler
 
@@ -21,7 +22,8 @@ yüksek olasılık, küçük kasa payı.
 `.github/workflows/rapor.yml` salı ve cuma akşamı veriyi indirir, backtest + raporu
 `reports/` altına yazıp commit eder. Kullanıcı raporları GitHub'dan okur; bilgisayarında
 kurulum yok. `.github/workflows/sorgu.yml` elle çalışır: üç MS oranı alır, benzer
-maç tablosunu çalışma özetine yazar.
+maç tablosunu çalışma özetine yazar. `.github/workflows/analiz.yml` elle çalışır: iki takım
+adı alır, maç analizini özete ve `reports/analiz/` altına yazar.
 
 ## Kurallar
 - Ücretsiz veri ve araçlarla kal; ücretli API önerme (kullanıcı sormadıkça).
@@ -41,6 +43,5 @@ para yatırmaya uygun değil; öncelik modeli iyileştirmek.
 
 ## Sıradaki fikirler
 - `kupon` komutu: oynanan bahisleri CSV'ye kaydet, kâr/zarar ve isabet takibi
-- Takım adlarında Türkçe yazımı kabul eden eşleme (Fenerbahçe -> Fenerbahce)
 - Şut/isabetli şut verisiyle (HS, HST sütunları) gol beklentisini güçlendirme
 - Raporu her pazartesi otomatik üretme (Windows Görev Zamanlayıcı)

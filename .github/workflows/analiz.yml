@@ -1,0 +1,52 @@
+name: Maç analiz et
+
+on:
+  workflow_dispatch:
+    inputs:
+      ev:
+        description: "Ev sahibi takım (örnek: Galatasaray)"
+        required: true
+      deplasman:
+        description: "Deplasman takımı (örnek: Fenerbahçe)"
+        required: true
+      lig:
+        description: "Lig kodu, boş bırakılabilir (T1 Süper Lig, E0 Premier League...)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repo-push
+  cancel-in-progress: false
+
+jobs:
+  analiz:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pandas numpy
+      - run: python -m iddia indir
+      - name: Maç analizi
+        env:
+          EV: ${{ inputs.ev }}
+          DEP: ${{ inputs.deplasman }}
+          LIG: ${{ inputs.lig }}
+        run: |
+          set -o pipefail
+          if [ -n "$LIG" ]; then ARGS=(--lig "$LIG"); else ARGS=(); fi
+          python -m iddia analiz "$EV" "$DEP" "${ARGS[@]}" --kaydet | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Analizi depoya kaydet
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/analiz
+          git diff --cached --quiet || git commit -m "Analiz: $EV - $DEP"
+          git pull --rebase && git push
+        env:
+          EV: ${{ inputs.ev }}
+          DEP: ${{ inputs.deplasman }}

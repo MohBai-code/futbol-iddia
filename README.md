@@ -39,6 +39,19 @@ indirir, raporu `reports/` klasörüne yazar ve depoya kaydeder. Raporu telefond
 GitHub'da açıp okuyabilirsin. Elle çalıştırmak için: Actions > Haftalık rapor > Run workflow.
 Takım adları veri kaynağındaki gibi yazılır (yanlış yazarsan liste gösterilir).
 
+## Maç analizi (ajan)
+
+İstediğin maçı yaz, geçmişe bakıp tahmin ve açıklamalı yorum versin.
+
+- **Telefondan:** GitHub'da Actions > **Maç analiz et** > Run workflow. Ev sahibi ve deplasman
+  takımını yaz (Türkçe harfle yazabilirsin: Fenerbahçe, Beşiktaş). Sonuç çalışmanın özet
+  sayfasında görünür ve `reports/analiz/` klasörüne kaydedilir.
+- **Komutla:** `python -m iddia analiz Galatasaray Fenerbahçe` (lig kodu isteğe bağlı: `--lig T1`)
+
+Analizde: kısa yorum, model olasılıkları (MS, ÇŞ, KG, 2.5 Alt/Üst), en olası skorlar,
+iki takımın son 6 maçlık formu (ev/deplasman ayrı), aralarındaki son 8 maç ve fikstürde
+oranı varsa aynı oranlarla açılmış geçmiş maçların sonuçları.
+
 ## Benzer oranlı maçlar
 
 "Bu maçla aynı oranlarla açılmış geçmiş maçlar nasıl bitti?" sorusunun cevabı.
@@ -69,6 +82,7 @@ gün önceki piyasa ortalamasıdır; gerçek ilk açılış oranı ücretsiz ver
 | `iddia/model.py` | Zaman ağırlıklı Poisson + Dixon-Coles modeli |
 | `iddia/markets.py` | Pazar olasılıkları, değerli oran kuralları, bahis miktarı |
 | `iddia/report.py` | Haftalık rapor |
+| `iddia/analiz.py` | Tek maç analizi ve Türkçe takım adı eşleme |
 | `iddia/backtest.py` | Geçmişe dönük test |
 
 ## Dürüst uyarı

@@ -1,8 +1,8 @@
-"""Kullanım: python -m iddia {indir|rapor|backtest|mac}"""
+"""Kullanım: python -m iddia {indir|rapor|backtest|mac|analiz|benzer|benzer-rapor}"""
 import argparse
 import sys
 
-from . import backtest, benzer, config, data, markets, model, report
+from . import analiz, backtest, benzer, config, data, markets, model, report
 
 
 def main() -> None:
@@ -19,6 +19,11 @@ def main() -> None:
     b.add_argument("ms1")
     b.add_argument("msx")
     b.add_argument("ms2")
+    a = sub.add_parser("analiz", help="Tek maç için açıklamalı analiz (form, aralarındaki maçlar, tahmin)")
+    a.add_argument("ev", help="Ev sahibi (Türkçe yazılabilir: Fenerbahçe)")
+    a.add_argument("deplasman")
+    a.add_argument("--lig", choices=list(config.LEAGUES), default=None, help="Lig kodu (isteğe bağlı)")
+    a.add_argument("--kaydet", action="store_true", help="reports/analiz/ altına da yaz")
     sub.add_parser("benzer-rapor", help="Haftanın her maçı için benzer oranlı maç tablosu")
     args = ap.parse_args()
     try:  # Windows konsolunda Türkçe karakterler bozulmasın
@@ -39,6 +44,16 @@ def main() -> None:
         if min(odds) <= 1:
             raise SystemExit("Oranlar 1'den büyük olmalı.")
         print(benzer.query(*odds))
+    elif args.cmd == "analiz":
+        text = analiz.analyze(args.ev, args.deplasman, args.lig)
+        print(text)
+        if args.kaydet:
+            out = config.REPORT_DIR / "analiz"
+            out.mkdir(parents=True, exist_ok=True)
+            from datetime import date
+            name = f"{date.today():%Y-%m-%d}-{analiz.norm(args.ev)}-{analiz.norm(args.deplasman)}.md"
+            (out / name).write_text(text, encoding="utf-8")
+            print(f"Kaydedildi: reports/analiz/{name}")
     elif args.cmd == "benzer-rapor":
         print(f"Rapor yazıldı: {benzer.write()}")
     elif args.cmd == "backtest":
