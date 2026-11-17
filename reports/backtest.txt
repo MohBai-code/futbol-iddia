@@ -1,20 +1,20 @@
 Lig              Maç  Bahis  İsabet  Getiri   Model LL  Piyasa LL
-Süper Lig        353     90     53%   -6.8%     0.989     0.963
+Süper Lig        353     95     53%   -8.7%     0.993     0.967
 Premier League   365     78     51%   -6.9%     1.035     1.023
 Championship     351    100     44%  -20.9%     1.055     1.025
 La Liga          357     80     51%   -9.9%     0.974     0.955
-La Liga 2        372    113     46%  -20.2%     1.016     0.997
+La Liga 2        379    108     50%  -13.1%     1.040     1.016
 Serie A          380     88     43%  -23.8%     0.958     0.946
 Serie B          365     94     50%  -11.4%     1.027     1.014
-Bundesliga       364     63     52%   -8.2%     0.971     0.953
+Bundesliga       364     69     48%  -16.7%     0.973     0.953
 2. Bundesliga    365     53     43%  -24.2%     1.051     1.034
-Ligue 1          366     94     40%  -29.3%     1.003     0.978
+Ligue 1          372    130     44%  -22.9%     1.004     0.977
 Ligue 2          358    118     59%   +5.6%     1.064     1.047
-Eredivisie       376     49     65%   +7.9%     1.000     0.992
+Eredivisie       376     50     64%   +5.8%     1.000     0.992
 Belçika Pro Lig  360    108     51%  -10.0%     1.002     0.994
 Portekiz Ligi    366    100     52%   -7.5%     0.925     0.919
 İskoçya Premier  372     73     48%  -13.7%     0.988     0.978
-Yunanistan Süpe  364     88     62%  +11.2%     0.959     0.944
+Yunanistan Süpe  349     70     51%   -6.5%     0.968     0.941
 
 Getiri: bahis başına sabit 1 birimle ortalama kâr/zarar.
 LL (log kayıp): düşük olan daha isabetli. Model LL > Piyasa LL ise
