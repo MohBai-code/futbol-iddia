@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 
 import pandas as pd
@@ -40,14 +41,25 @@ def _get(url: str, dest) -> bool:
     return True
 
 
-def download() -> None:
+def download(leagues=None) -> None:
+    """Dosyaları paralel indirir. Biten sezonların dosyası zaten varsa tekrar indirmez
+    (GitHub Actions önbelleği sayesinde her çalışmada sadece bu sezon ve fikstür iner)."""
     config.RAW_DIR.mkdir(parents=True, exist_ok=True)
-    ok = 0
-    for code in season_codes():
-        for div in config.LEAGUES:
-            ok += _get(f"{BASE}/mmz4281/{code}/{div}.csv", config.RAW_DIR / f"{div}_{code}.csv")
-    ok += _get(f"{BASE}/fixtures.csv", config.RAW_DIR / "fixtures.csv")
-    if not ok:
+    leagues = list(leagues or config.LEAGUES)
+    codes = season_codes()
+    jobs = []
+    for i, code in enumerate(codes):
+        for div in leagues:
+            dest = config.RAW_DIR / f"{div}_{code}.csv"
+            if i > 0 and dest.exists() and dest.stat().st_size > 0:
+                continue  # biten sezon değişmez
+            jobs.append((f"{BASE}/mmz4281/{code}/{div}.csv", dest))
+    jobs.append((f"{BASE}/fixtures.csv", config.RAW_DIR / "fixtures.csv"))
+    print(f"{len(jobs)} dosya indirilecek")
+    with ThreadPoolExecutor(max_workers=8) as ex:
+        ok = sum(ex.map(lambda j: _get(*j), jobs))
+    have = any(config.RAW_DIR.glob("*_*.csv"))
+    if not ok and not have:
         raise SystemExit("Hiçbir dosya indirilemedi. İnternet bağlantısını kontrol et.")
 
 

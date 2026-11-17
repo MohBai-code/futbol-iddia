@@ -25,6 +25,11 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install pandas numpy
+      - uses: actions/cache@v4
+        with:
+          path: data/raw
+          key: raw-${{ github.run_id }}
+          restore-keys: raw-
       - run: python -m iddia indir
       - name: Benzer oranlı maçlar
         env:
